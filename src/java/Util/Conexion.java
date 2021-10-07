@@ -36,11 +36,11 @@ public class Conexion {
         }
     }
     
-    public Connection obtener(){
+    public Connection obtenerConexion(){
         return conexion;
     }
     
-    public  Connection cerrar() throws SQLException{
+    public  Connection cerrarConexion() throws SQLException{
         conexion.close();
         conexion = null;
         return conexion;
