@@ -11,4 +11,40 @@ package ModeloVO;
  */
 public class UsuarioVO {
     
+    private String usuId, usuLogin, usuPassword;
+    
+    public UsuarioVO() {
+    }
+
+    public UsuarioVO(String usuId, String usuLogin, String usuPassword) {
+        this.usuId = usuId;
+        this.usuLogin = usuLogin;
+        this.usuPassword = usuPassword;
+    }
+
+    
+
+    public String getUsuId() {
+        return usuId;
+    }
+
+    public void setUsuId(String usuId) {
+        this.usuId = usuId;
+    }
+
+    public String getUsuLogin() {
+        return usuLogin;
+    }
+
+    public void setUsuLogin(String usuLogin) {
+        this.usuLogin = usuLogin;
+    }
+
+    public String getUsuPassword() {
+        return usuPassword;
+    }
+
+    public void setUsuPassword(String usuPassword) {
+        this.usuPassword = usuPassword;
+    }
 }

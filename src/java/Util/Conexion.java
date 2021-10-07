@@ -40,7 +40,7 @@ public class Conexion {
         return conexion;
     }
     
-    public  Connection cerrarConexion() throws SQLException{
+    public  Connection cerrarConexion() throws SQLException {
         conexion.close();
         conexion = null;
         return conexion;
