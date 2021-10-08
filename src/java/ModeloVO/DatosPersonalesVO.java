@@ -11,4 +11,88 @@ package ModeloVO;
  */
 public class DatosPersonalesVO {
     
+    private String datId,usuId,datNombre,datApellido,datTipoId,datNumeroId,datTelefono,datCorreo;
+    
+    public DatosPersonalesVO() {
+    }
+        
+    public DatosPersonalesVO(String datId, String usuId, String datNombre, String datApellido, String datTipoId, String datNumeroId, String datTelefono, String datCorreo) {
+        this.datId = datId;
+        this.usuId = usuId;
+        this.datNombre = datNombre;
+        this.datApellido = datApellido;
+        this.datTipoId = datTipoId;
+        this.datNumeroId = datNumeroId;
+        this.datTelefono = datTelefono;
+        this.datCorreo = datCorreo;
+    }
+    
+    
+    
+    public String getDatId() {
+        return datId;
+    }
+
+    public void setDatId(String datId) {
+        this.datId = datId;
+    }
+
+    public String getUsuId() {
+        return usuId;
+    }
+
+    public void setUsuId(String usuId) {
+        this.usuId = usuId;
+    }
+
+    public String getDatNombre() {
+        return datNombre;
+    }
+
+    public void setDatNombre(String datNombre) {
+        this.datNombre = datNombre;
+    }
+
+    public String getDatApellido() {
+        return datApellido;
+    }
+
+    public void setDatApellido(String datApellido) {
+        this.datApellido = datApellido;
+    }
+
+    public String getDatTipoId() {
+        return datTipoId;
+    }
+
+    public void setDatTipoId(String datTipoId) {
+        this.datTipoId = datTipoId;
+    }
+
+    public String getDatNumeroId() {
+        return datNumeroId;
+    }
+
+    public void setDatNumeroId(String datNumeroId) {
+        this.datNumeroId = datNumeroId;
+    }
+
+    public String getDatTelefono() {
+        return datTelefono;
+    }
+
+    public void setDatTelefono(String datTelefono) {
+        this.datTelefono = datTelefono;
+    }
+
+    public String getDatCorreo() {
+        return datCorreo;
+    }
+
+    public void setDatCorreo(String datCorreo) {
+        this.datCorreo = datCorreo;
+    }
+    
+    
+    
 }

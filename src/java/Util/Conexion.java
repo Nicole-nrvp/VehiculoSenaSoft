@@ -12,7 +12,6 @@ import java.sql.*;
  * @author Valentina
  */
 public class Conexion {
-    
     private String driver, user, password, nombrebd, urlbd;
     private Connection conexion;
     
@@ -23,7 +22,7 @@ public class Conexion {
         driver="com.mysql.jdbc.Driver";
         user="root";
         password="";
-        nombrebd="ventavehiculos";
+        nombrebd="ventadevehiculos";
         urlbd="jdbc:mysql://localhost:3306/" + nombrebd;
         
         try {
@@ -49,4 +48,5 @@ public class Conexion {
     public static void main(String[] args) {
         new Conexion();
     }
+
 }

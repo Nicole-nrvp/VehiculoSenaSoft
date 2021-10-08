@@ -5,21 +5,20 @@
  */
 package Controlador;
 
-import ModeloVO.UsuarioVO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Valentina
+ * @author Camilo
  */
-@WebServlet(name = "UsuarioControlador", urlPatterns = {"/UsuarioControlador"})
-public class UsuarioControlador extends HttpServlet {
+@WebServlet(name = "sesiones", urlPatterns = {"/sesiones"})
+public class sesiones extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,14 +31,12 @@ public class UsuarioControlador extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        int opcion = Integer.parseInt(request.getParameter("opcion"));
-        String UsuId = request.getParameter("txtId");
-        String UsuLogin = request.getParameter("txtUsuario");
-        String UsuPassword = request.getParameter("txtClave");
-        String UsuEstado = request.getParameter("txtEstado");
+             HttpSession buscarSesion = request.getSession();
+            buscarSesion.removeAttribute("datosUsuario");
+            buscarSesion.removeAttribute("rol");
+            buscarSesion.invalidate();
+            request.getRequestDispatcher("index.jsp").forward(request, response);
         
-        UsuarioVO usuVO = new UsuarioVO(UsuId, UsuEstado, UsuLogin, UsuPassword);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
