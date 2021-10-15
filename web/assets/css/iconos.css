@@ -1,0 +1,26 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 15/08/2021, 08:07:59 AM
+    Author     : Camilo
+*/
+.frm-iconoa{
+    color: #F4D03F ;
+}
+.frm-iconod{
+    color: #B03A2E ;
+}
+.submit-btnd{
+    background-color: transparent;
+    border: none;
+}
+.submit-btna{
+    background-color: transparent;
+    border: none;
+}
+.iconos{
+    display: flex;
+}

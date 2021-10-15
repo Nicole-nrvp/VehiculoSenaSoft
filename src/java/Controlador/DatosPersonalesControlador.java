@@ -5,6 +5,8 @@
  */
 package Controlador;
 
+import ModeloDAO.DatosPersonalesDAO;
+import ModeloVO.DatosPersonalesVO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -17,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Valentina
  */
-@WebServlet(name = "DatosPersonalesControlador", urlPatterns = {"/DatosPersonalesControlador"})
+@WebServlet(name = "Datos", urlPatterns = {"/Datos"})
 public class DatosPersonalesControlador extends HttpServlet {
 
     /**
@@ -31,19 +33,29 @@ public class DatosPersonalesControlador extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet DatosPersonalesControlador</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet DatosPersonalesControlador at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        int opcion = Integer.parseInt(request.getParameter("opcion"));
+        String txtDatId = request.getParameter("txtDatId");
+        String txtDatNombre = request.getParameter("txtDatNombre");
+        String txtDatApellido = request.getParameter("txtDatApellido");
+        String txtDatNumeroId = request.getParameter("txtDatNumeroId");
+        String txtDatTelefono = request.getParameter("txtDatTelefono");
+        String txtDatCorreo = request.getParameter("txtDatCorreo");
+        String txtUsuId = request.getParameter("txtUsuId");
+        
+        DatosPersonalesVO datVO = new DatosPersonalesVO(txtDatId, txtUsuId, txtDatNombre, txtDatApellido, txtDatId, txtDatNumeroId, txtDatTelefono, txtDatCorreo); 
+        DatosPersonalesDAO datDAO = new DatosPersonalesDAO(datVO);
+       switch (opcion) {
+           case 1: 
+               if (datDAO.actualizarRegistro()) {
+                   request.setAttribute("mensajeExito", "<script src=\"assets/js/Bien.js\"></script>");
+               }else{
+                   request.setAttribute("mensajeError", "<script src=\"assets/js/Mal.js\"></script>");
+               }
+               request.getRequestDispatcher("editarDatos.jsp").forward(request, response);
+       
+               break;
+       }
+               
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

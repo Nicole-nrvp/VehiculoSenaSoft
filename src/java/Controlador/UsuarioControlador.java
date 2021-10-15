@@ -5,19 +5,25 @@
  */
 package Controlador;
 
+import ModeloDAO.DatosPersonalesDAO;
+import ModeloDAO.UsuarioDAO;
+import ModeloVO.DatosPersonalesVO;
+import ModeloVO.UsuarioVO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Valentina
  */
-@WebServlet(name = "UsuarioControlador", urlPatterns = {"/UsuarioControlador"})
+@WebServlet(name = "Usuario", urlPatterns = {"/Usuario"})
 public class UsuarioControlador extends HttpServlet {
 
     /**
@@ -31,20 +37,105 @@ public class UsuarioControlador extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet UsuarioControlador</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet UsuarioControlador at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        //Recoger elementos scanner (RECIBIR DATOS DE LAS VISTAS)
+        int opcion = Integer.parseInt(request.getParameter("opcion"));
+        String usuId = request.getParameter("textId");
+        String usuLogin = request.getParameter("textUsuario");
+        String usuPassword = request.getParameter("textClave");
+
+        
+        UsuarioVO usuVO = new UsuarioVO(usuId, usuLogin, usuPassword);
+       
+        UsuarioDAO usuDAO = new UsuarioDAO(usuVO);
+        
+        
+        switch (opcion) {
+
+            
+            case 1:
+                
+                if (usuDAO.agregarRegistro()) {
+                    request.setAttribute("mensajeExito", "El usuario se registro correctamente");
+                    
+                } else {
+                    request.setAttribute("mensajeError", "El usuario no se registro correctamente");
+                }
+                
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+                
+                break;
+
+            case 2: 
+                if (usuDAO.actualizarRegistro()) {
+                    request.setAttribute("mensajeExito", "El usuario se actualizo correctamente");
+                    
+                } else {
+                    request.setAttribute("mensajeError", "El usuario no se actualizo correctamente");
+                }
+                
+                request.getRequestDispatcher("actualizarUsuario.jsp").forward(request, response);
+                break;
+
+            
+            case 3: 
+                String idUsuario="";
+                
+                
+                if (usuDAO.iniciarSesion(usuLogin, usuPassword)) {
+
+
+                    HttpSession miSesion = request.getSession(true);
+                    usuVO = new UsuarioVO(usuId, usuLogin, usuPassword);
+                    miSesion.setAttribute("datosUsuario", usuVO);
+     
+          
+                    ArrayList<UsuarioVO> listaRol = usuDAO.rol(usuLogin);
+
+                    
+                    for (int i = 0; i < listaRol.size(); i++) {
+                        usuVO = listaRol.get(i);
+                        idUsuario = usuVO.getUsuId();
+                    }
+                    UsuarioVO usuVO2 = new UsuarioVO();
+                    usuVO2 = usuDAO.ConsultarUsuario(idUsuario);
+                    if (usuVO2 != null) {
+
+                        miSesion.setAttribute("UsuarioConsultado", usuVO);
+
+                    } else {
+                        request.setAttribute("mensajeError", "<script src=\"assets/js/Error.js\"></script>");
+                    }
+                    DatosPersonalesVO datpVO = new DatosPersonalesVO();
+                    DatosPersonalesDAO datpDAO = new DatosPersonalesDAO();
+                    
+                    datpVO=datpDAO.consultarDatos(idUsuario);
+                    miSesion.setAttribute("datosPersonales", datpVO);
+                    
+                    miSesion.setAttribute("rol", listaRol);
+//......................................................................................................................
+                    
+                    
+                    if (listaRol.size() > 1) {
+                        request.getRequestDispatcher("index.jsp").forward(request, response);
+
+                    } else if (usuVO.getRol().equals("Vendedor")) {
+
+                        request.getRequestDispatcher("vendedor.jsp").forward(request, response);
+
+                    } else {
+                        request.getRequestDispatcher("comprador.jsp").forward(request, response);
+                    }
+                    
+
+                } else {
+
+                    request.setAttribute("mensajeError", "El usuario y/o la contraseña son incorrectos");
+                    request.getRequestDispatcher("iniciarSesion.jsp").forward(request, response);
+                }
+                break;
         }
-    }
+        }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

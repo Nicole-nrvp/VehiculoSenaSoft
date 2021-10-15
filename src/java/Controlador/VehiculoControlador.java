@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Valentina
  */
-@WebServlet(name = "VehiculoControlador", urlPatterns = {"/VehiculoControlador"})
+@WebServlet(name = "VehiculoControlador", urlPatterns = {"/Vehiculo"})
 public class VehiculoControlador extends HttpServlet {
 
     /**
@@ -73,10 +73,12 @@ public class VehiculoControlador extends HttpServlet {
                 vehVO = vehDAO.consultarPlaca(vehPlaca);
                 if (vehVO == null) {
                     if (vehDAO.agregarRegistro()) {
-                        request.setAttribute("mensajeExito", "El vehiculo se registro correctamente");
+                        request.setAttribute("mensajeExito", "<script src=\"assets/js/Bien.js\"></script>");
+//                        request.setAttribute("mensajeExito", "El vehiculo se registro correctamente");
                         //Si el registro SE LOGRO EL LA VISTA MUESTRA ERROR 
                     } else {
-                        request.setAttribute("mensajeError", "El vehiculo NO se registro correctamente");
+                        request.setAttribute("mensajeError", "<script src=\"assets/js/Error.js\"></script>");
+//                        request.setAttribute("mensajeError", "El vehiculo NO se registro correctamente");
                     }
                 } else {
                     request.setAttribute("mensajeError", "El vehiculo con esa placa ya esta registrado");
@@ -108,7 +110,7 @@ public class VehiculoControlador extends HttpServlet {
                 if (vehVO != null) {
 
                     request.setAttribute("vehiculoConsultado", vehVO);
-                    request.getRequestDispatcher("actualizarVehiculo.jsp").forward(request, response);
+                    request.getRequestDispatcher("consultarVehiculo.jsp").forward(request, response);
 
                 } else {
                     request.setAttribute("mensajeError", "El Vehículo NO Existe");
